@@ -44,4 +44,20 @@ const updateGame = async (req, res, next) => {
 	}
 };
 
-module.exports = { findAllGames, findGameById, createGame, updateGame };
+const deleteGame = async (req, res, next) => {
+	try {
+		req.game = await games.findByIdAndDelete(req.params.id);
+		next();
+	} catch (error) {
+		res.setHeader("Content-Type", "application/json");
+		res.status(400).send(JSON.stringify({ message: "Error deleting game" }));
+	}
+};
+
+module.exports = {
+	findAllGames,
+	findGameById,
+	createGame,
+	updateGame,
+	deleteGame,
+};

@@ -5,6 +5,7 @@ const {
 	findGameById,
 	createGame,
 	updateGame,
+	deleteGame,
 } = require("../middlewares/games");
 
 const {
@@ -12,6 +13,7 @@ const {
 	sendGameById,
 	sendGameCreated,
 	sendGameUpdated,
+	sendGameDeleted,
 } = require("../controllers/games");
 
 gamesRouter.get("/games", findAllGames, sendAllGames);
@@ -26,5 +28,7 @@ gamesRouter.put(
 	updateGame,
 	sendGameUpdated
 );
+
+gamesRouter.delete("/games/:id", deleteGame, sendGameDeleted);
 
 module.exports = gamesRouter;
