@@ -12,7 +12,7 @@ const findUserById = async (req, res, next) => {
 		next();
 	} catch (error) {
 		res.setHeader("Content-Type", "application/json");
-		res.status(404).send(JSON.stringify({ message: "Пользователь не найден" }));
+		res.status(404).send(JSON.stringify({ message: "User not found" }));
 	}
 };
 
@@ -28,4 +28,14 @@ const createUser = async (req, res, next) => {
 	}
 };
 
-module.exports = { findAllUsers, findUserById, createUser };
+const updateUser = async (req, res, next) => {
+	try {
+		req.user = await users.findByIdAndUpdate(req.params.id, req.body);
+		next();
+	} catch (error) {
+		res.setHeader("Content-Type", "application/json");
+		res.status(400).send(JSON.stringify({ message: "Error updating user" }));
+	}
+};
+
+module.exports = { findAllUsers, findUserById, createUser, updateUser };
