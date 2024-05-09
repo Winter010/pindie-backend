@@ -54,10 +54,71 @@ const deleteGame = async (req, res, next) => {
 	}
 };
 
+const checkEmptyFields = async (req, res, next) => {
+	if (
+		!req.body.title ||
+		!req.body.description ||
+		!req.body.image ||
+		!req.body.link ||
+		!req.body.developer
+	) {
+		res.setHeader("Content-Type", "application/json");
+		res.status(400).send(JSON.stringify({ message: "Fill all fields" }));
+	} else {
+		next();
+	}
+};
+
+const checkIfUsersAreSafe = async (req, res, next) => {
+	if (!req.body.users) {
+		next();
+		return;
+	}
+	if (req.body.users.length - 1 === req.game.users.length) {
+		next();
+		return;
+	} else {
+		res.setHeader("Content-Type", "application/json");
+		res.status(400).send(
+			JSON.stringify({
+				message: "You cannot delete users or add more than one user",
+			})
+		);
+	}
+};
+const checkIfCategoriesAvaliable = async (req, res, next) => {
+	if (!req.body.categories || req.body.categories.length === 0) {
+		res.setHeader("Content-Type", "application/json");
+		res
+			.status(400)
+			.send(JSON.stringify({ message: "Select at least one category" }));
+	} else {
+		next();
+	}
+};
+
+const checkIsGameExists = async (req, res, next) => {
+	const isInArray = req.gamesArray.find(game => {
+		return req.body.title === game.title;
+	});
+	if (isInArray) {
+		res.setHeader("Content-Type", "application/json");
+		res
+			.status(400)
+			.send(JSON.stringify({ message: "Game with this name already exists" }));
+	} else {
+		next();
+	}
+};
+
 module.exports = {
 	findAllGames,
 	findGameById,
 	createGame,
 	updateGame,
 	deleteGame,
+	checkEmptyFields,
+	checkIfUsersAreSafe,
+	checkIfCategoriesAvaliable,
+	checkIsGameExists,
 };

@@ -6,6 +6,10 @@ const {
 	createGame,
 	updateGame,
 	deleteGame,
+	checkEmptyFields,
+	checkIfUsersAreSafe,
+	checkIfCategoriesAvaliable,
+	checkIsGameExists,
 } = require("../middlewares/games");
 
 const {
@@ -19,12 +23,22 @@ const {
 gamesRouter.get("/games", findAllGames, sendAllGames);
 gamesRouter.get("/games/:id", findGameById, sendGameById);
 
-gamesRouter.post("/games", findAllGames, createGame, sendGameCreated);
+gamesRouter.post(
+	"/games",
+	findAllGames,
+	checkIsGameExists,
+	checkIfCategoriesAvaliable,
+	checkEmptyFields,
+	createGame,
+	sendGameCreated
+);
 
 gamesRouter.put(
 	"/games/:id",
 	findGameById,
-	// Шаг 2. Проверки, если нужны
+	checkIfUsersAreSafe,
+	checkIfCategoriesAvaliable,
+	checkEmptyFields,
 	updateGame,
 	sendGameUpdated
 );
