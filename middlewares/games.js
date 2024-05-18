@@ -1,7 +1,13 @@
 const games = require("../models/game");
 
 const findAllGames = async (req, res, next) => {
-	console.log("GET /games");
+	if (req.query["categories.name"]) {
+		req.gamesArray = await games.findGameByCategory(
+			req.query["categories.name"]
+		);
+		next();
+		return;
+	}
 	req.gamesArray = await games.find({}).populate("categories").populate({
 		path: "users",
 		select: "-password",
@@ -111,6 +117,17 @@ const checkIsGameExists = async (req, res, next) => {
 	}
 };
 
+const checkIsVoteRequest = async (req, res, next) => {
+	if (Object.keys(req.body).length === 1 && req.body.users) {
+		req.isVoteRequest = true;
+	}
+	if (req.isVoteRequest) {
+		next();
+		return;
+	}
+	next();
+};
+
 module.exports = {
 	findAllGames,
 	findGameById,
@@ -121,4 +138,5 @@ module.exports = {
 	checkIfUsersAreSafe,
 	checkIfCategoriesAvaliable,
 	checkIsGameExists,
+	checkIsVoteRequest,
 };
