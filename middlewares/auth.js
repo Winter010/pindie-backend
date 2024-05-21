@@ -4,7 +4,7 @@ const checkAuth = (req, res, next) => {
 	const { authorization } = req.headers;
 
 	if (!authorization || !authorization.startsWith("Bearer ")) {
-		return res.status(401).send({ message: "Необходима авторизация" });
+		return res.status(401).send({ message: "Authorization required" });
 	}
 
 	const token = authorization.replace("Bearer ", "");
@@ -12,7 +12,7 @@ const checkAuth = (req, res, next) => {
 	try {
 		req.user = jwt.verify(token, "some-secret-key");
 	} catch (err) {
-		return res.status(401).send({ message: "Необходима авторизация" });
+		return res.status(401).send({ message: "Authorization required" });
 	}
 
 	next();

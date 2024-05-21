@@ -22,7 +22,7 @@ const createUser = async (req, res, next) => {
 		req.user = await users.create(req.body);
 		next();
 	} catch (error) {
-		res.status(400).send("Ошибка при создании пользователя");
+		res.status(400).send("Error creating user");
 	}
 };
 
@@ -89,7 +89,7 @@ const hashPassword = async (req, res, next) => {
 		req.body.password = hash;
 		next();
 	} catch (error) {
-		res.status(400).send({ message: "Ошибка хеширования пароля" });
+		res.status(400).send({ message: "Password hashing error" });
 	}
 };
 
