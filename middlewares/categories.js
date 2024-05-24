@@ -45,7 +45,7 @@ const updateCategory = async (req, res, next) => {
 
 const deleteCategory = async (req, res, next) => {
 	try {
-		req.game = await games.findByIdAndDelete(req.params.id);
+		req.game = await categories.findByIdAndDelete(req.params.id);
 		next();
 	} catch (error) {
 		res.setHeader("Content-Type", "application/json");
