@@ -61,6 +61,11 @@ const deleteGame = async (req, res, next) => {
 };
 
 const checkEmptyFields = async (req, res, next) => {
+	if (req.isVoteRequest) {
+		next();
+		return;
+	}
+
 	if (
 		!req.body.title ||
 		!req.body.description ||
@@ -93,6 +98,11 @@ const checkIfUsersAreSafe = async (req, res, next) => {
 	}
 };
 const checkIfCategoriesAvaliable = async (req, res, next) => {
+	if (req.isVoteRequest) {
+		next();
+		return;
+	}
+
 	if (!req.body.categories || req.body.categories.length === 0) {
 		res.setHeader("Content-Type", "application/json");
 		res
@@ -116,14 +126,9 @@ const checkIsGameExists = async (req, res, next) => {
 		next();
 	}
 };
-
 const checkIsVoteRequest = async (req, res, next) => {
 	if (Object.keys(req.body).length === 1 && req.body.users) {
 		req.isVoteRequest = true;
-	}
-	if (req.isVoteRequest) {
-		next();
-		return;
 	}
 	next();
 };
