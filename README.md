@@ -1,5 +1,29 @@
-Ссылка на репозиторий с фронтендом: https://github.com/Winter010/pindie-frontend
+## Установка пакетов
 
-Ссылка на домен фронтенда: https://pindie-winter-frontend.nomoredomainswork.ru/
+```
+npm install
+```
 
-IP-адрес: 158.160.167.223
+## Запуска проекта
+
+```
+npm run start
+```
+
+## Коллекции
+
+Коллекци для MongoDB находятся в папке compass-export
+
+## local host
+
+http://localhost:3001
+
+## Авторизация
+
+login: admin
+e-mail: admin@example.com
+password: 123
+
+## Frontend
+
+https://github.com/Winter010/pindie-frontend
