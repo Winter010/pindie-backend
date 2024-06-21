@@ -20,9 +20,9 @@ http://localhost:3001
 
 ## Авторизация
 
-login: admin
-e-mail: admin@example.com
-password: 123
+- login: admin
+- e-mail: admin@example.com
+- password: 123
 
 ## Frontend
 
